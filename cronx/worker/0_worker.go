@@ -10,17 +10,26 @@
 package worker
 
 import (
+	"fmt"
 	"sync"
+
+	"github.com/bcyxy/cronx/cronx/worker/jobconf"
 )
 
 var (
-	stopCh  chan struct{}
+	stopCh  = make(chan struct{})
 	stopSyn sync.WaitGroup
 )
 
 func Start() error {
 	stopCh = make(chan struct{})
 	stopSyn.Add(1)
+
+	err := jobconf.Init()
+	if err != nil {
+		return fmt.Errorf("init_job_conf_failed:%v", err)
+	}
+
 	go run()
 	return nil
 }

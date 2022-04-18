@@ -15,10 +15,9 @@ var (
 )
 
 // Init 初始化日志模块
-func Init(dir, fName string) error {
+func Init(dir, fName, level string) error {
 	// 日志级别
-	l := "INFO"
-	switch strings.ToUpper(l) {
+	switch strings.ToUpper(level) {
 	case "DEBUG":
 		golog.Level = golog.DEBUG
 	case "INFO":

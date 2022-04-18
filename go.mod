@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/Unknwon/goconfig v1.0.0
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/hyahm/golog v0.0.0-20220331081316-c10def14fc7d
 )
 

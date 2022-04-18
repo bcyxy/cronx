@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"os"
 	"os/signal"
+	"path"
 	"time"
 
 	"github.com/bcyxy/cronx/common/conf"
@@ -33,11 +34,9 @@ func Main() {
 	}
 
 	// 初始化日志
-	l := conf.GetConf("global", "log_level", "INFO")
-	logDir := gval.RootDir + "/log"
-	os.MkdirAll(logDir, os.ModePerm)
-	logPath := logDir + "/cronx.log"
-	err = log.Init(l, logPath)
+	level := conf.GetConf("global", "log_level", "INFO")
+	logDir := path.Join(gval.RootDir, "log")
+	err = log.Init(logDir, "cronx.log", level)
 	if err != nil {
 		fmt.Printf("Init logger failed: %v\n", err)
 		return
@@ -51,7 +50,7 @@ func Main() {
 			log.Error("start_controller_failed. err=%v", err)
 			return
 		}
-		defer worker.Stop()
+		defer controller.Stop()
 	}
 
 	// 启动worker
